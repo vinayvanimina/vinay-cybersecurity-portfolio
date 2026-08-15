@@ -34,29 +34,6 @@ const revealObserver = new IntersectionObserver(
 
 document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
-const sectionLinks = [...document.querySelectorAll('.nav a[href^="#"]')];
-const sections = sectionLinks
-  .map(link => document.querySelector(link.getAttribute("href")))
-  .filter(Boolean);
-
-const sectionObserver = new IntersectionObserver(
-  entries => {
-    const visible = entries
-      .filter(entry => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-    if (!visible) return;
-
-    sectionLinks.forEach(link => {
-      const isActive = link.getAttribute("href") === `#${visible.target.id}`;
-      link.classList.toggle("active", isActive);
-    });
-  },
-  { rootMargin: "-25% 0px -60% 0px", threshold: [0.05, 0.2, 0.4] }
-);
-
-sections.forEach(section => sectionObserver.observe(section));
-
 function updateScrollUi() {
   const y = window.scrollY;
   if (header) header.classList.toggle("scrolled", y > 24);
@@ -76,10 +53,8 @@ if (supportsFinePointer) {
   document.querySelectorAll(".spotlight").forEach(card => {
     card.addEventListener("pointermove", event => {
       const rect = card.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      card.style.setProperty("--mx", `${x}px`);
-      card.style.setProperty("--my", `${y}px`);
+      card.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+      card.style.setProperty("--my", `${event.clientY - rect.top}px`);
     });
   });
 }

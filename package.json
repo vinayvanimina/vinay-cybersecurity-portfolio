@@ -1,0 +1,15 @@
+{
+  "name": "vinay-cybersecurity-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static cybersecurity portfolio deployed with Cloudflare Workers Static Assets.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && wrangler dev",
+    "check": "npm run build && wrangler deploy --dry-run",
+    "deploy": "npm run build && wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

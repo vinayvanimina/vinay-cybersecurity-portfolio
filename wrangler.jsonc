@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "vinay-cybersecurity-portfolio",
+  "compatibility_date": "2026-08-15",
+  "send_metrics": false,
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [
+    {
+      "pattern": "portfolio.cyberfox.in",
+      "custom_domain": true
+    }
+  ],
+  "assets": {
+    "directory": "./dist"
+  }
+}

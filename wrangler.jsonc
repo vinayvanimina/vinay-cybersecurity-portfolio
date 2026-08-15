@@ -7,7 +7,7 @@
   "preview_urls": true,
   "routes": [
     {
-      "pattern": "portfolio.cyberfox.in",
+      "pattern": "vinayvaniminaportfolio.cyberfox.in",
       "custom_domain": true
     }
   ],

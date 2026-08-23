@@ -21,7 +21,7 @@ The project archive currently includes:
 
 - Cybersecurity Portfolio Website
 - Proxmox SOC Home Lab
-- Wazuh SIEM & MCP Integration
+- Wazuh SIEM, MCP & SOAR Integration
 - pfSense Network Security Lab
 - Windows Server 2022 Active Directory Lab
 - Cloudflare Secure Remote Access

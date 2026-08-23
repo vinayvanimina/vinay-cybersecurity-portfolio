@@ -28,7 +28,7 @@ Use [`TEMPLATE.md`](TEMPLATE.md) for every new project.
 |---|---|---|---|
 | Cybersecurity Portfolio Website | Web / Cloudflare / GitHub | Active | [View](portfolio-website.md) |
 | Proxmox SOC Home Lab | Virtualization / SOC Lab | Active | [View](proxmox-soc-home-lab.md) |
-| Wazuh SIEM & MCP Integration | SIEM / Automation | Lab | [View](wazuh-siem-mcp.md) |
+| Wazuh SIEM, MCP & SOAR Integration | SIEM / AI / Automation | Active Lab | [View](wazuh-siem-mcp.md) |
 | pfSense Network Security Lab | Firewall / Networking | Lab | [View](pfsense-network-security-lab.md) |
 | Windows Server 2022 AD Lab | Active Directory / Endpoint | Lab | [View](windows-ad-lab.md) |
 | Cloudflare Secure Remote Access | Zero Trust / Tunnel / DNS | Active | [View](cloudflare-secure-access.md) |

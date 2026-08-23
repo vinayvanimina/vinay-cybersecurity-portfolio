@@ -2,7 +2,7 @@
 
 ## Status
 
-Lab / Active — read-only MCP and authenticated SOAR intake validated
+Lab / Active — read-only MCP and full Wazuh-to-Shuffle intake validated
 
 ## Objective
 
@@ -56,6 +56,7 @@ The MCP path is operational and read-only. A bounded level-12 Wazuh forwarder no
 10. Deployed a custom level-12 Wazuh integration that forwards only an approved, bounded field allowlist and excludes raw events, addresses, usernames, file paths, and command lines.
 11. Replaced the container-bundled HTTPS identity with persistent SAN-enabled TLS material and pinned the administratively verified public certificate on the Wazuh host.
 12. Validated a synthetic sanitized delivery with HTTP 200, activated the integration once in Wazuh, and confirmed the integration daemon remained running after restart.
+13. Generated one controlled level-12 alert through the real Wazuh manager pipeline and confirmed exactly one finished Shuffle execution containing only the approved ten-field schema.
 
 ## Persistence Checkpoint
 
@@ -99,6 +100,7 @@ The checkpoint and exact resume point are also committed in the private implemen
 - Shuffle and DFIR-IRIS are running as persistent self-hosted services.
 - The protected Shuffle intake workflow accepts authenticated test events and processes the complete event object successfully.
 - The active Wazuh integration can deliver a bounded synthetic level-12 event through the protected Shuffle webhook with verified TLS.
+- The complete manager-to-Shuffle path was validated through log collection, rule analysis, the integration daemon, sanitization, authenticated delivery, and successful workflow execution.
 - A sanitized Git checkpoint prevents completed infrastructure and workflow setup from being repeated.
 
 ## Lessons Learned
@@ -110,10 +112,10 @@ The checkpoint and exact resume point are also committed in the private implemen
 
 ## Next Phase
 
-1. Generate one controlled level-12 alert through the Wazuh manager pipeline and confirm exactly one authenticated Shuffle execution.
-2. Map approved fields into DFIR-IRIS and add duplicate-case prevention.
+1. Map approved fields into DFIR-IRIS and add duplicate-case prevention.
+2. Confirm repeated alerts update or reference the existing case instead of creating duplicates.
 3. Add approval gates before introducing any response action.
-4. Record sanitized full-path validation evidence.
+4. Record sanitized Wazuh-to-Shuffle-to-IRIS validation evidence.
 
 ## Last Updated
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-Lab / Active — read-only MCP and full Wazuh-to-Shuffle intake validated
+Lab / Active — read-only MCP and sanitized Wazuh-to-Shuffle-to-IRIS alert automation validated
 
 ## Objective
 
@@ -25,10 +25,14 @@ Wazuh Manager API + Indexer
        |
 Sanitized high-severity alert intake
        |
-Shuffle SOAR ----> DFIR-IRIS case management
+Shuffle SOAR
+       |
+Private relay with certificate-verified IRIS delivery
+       |
+DFIR-IRIS alert intake and analyst-led case management
 ```
 
-The MCP path is operational and read-only. A bounded level-12 Wazuh forwarder now delivers sanitized alerts to the authenticated Shuffle intake using strict TLS verification. Automated DFIR-IRIS case creation is the next implementation phase.
+The MCP path is operational and read-only. A bounded level-12 Wazuh forwarder delivers sanitized alerts to the authenticated Shuffle intake using strict TLS verification. Shuffle passes the approved event schema to a private relay, which creates an IRIS alert through certificate-verified HTTPS. Analysts decide whether an alert should become a case.
 
 ## Technologies Used
 
@@ -57,6 +61,10 @@ The MCP path is operational and read-only. A bounded level-12 Wazuh forwarder no
 11. Replaced the container-bundled HTTPS identity with persistent SAN-enabled TLS material and pinned the administratively verified public certificate on the Wazuh host.
 12. Validated a synthetic sanitized delivery with HTTP 200, activated the integration once in Wazuh, and confirmed the integration daemon remained running after restart.
 13. Generated one controlled level-12 alert through the real Wazuh manager pipeline and confirmed exactly one finished Shuffle execution containing only the approved ten-field schema.
+14. Recovered the DFIR-IRIS reverse-proxy network attachment and confirmed the persistent application stack was healthy.
+15. Deployed a private Shuffle-to-IRIS relay with a file-mounted API key, trusted IRIS certificate, restart behavior, and no public port exposure.
+16. Replaced the workflow test action with a saved HTTP POST action that forwards the sanitized Shuffle execution argument to the relay.
+17. Validated the complete Wazuh-to-Shuffle-to-IRIS path with a controlled alert and confirmed an IRIS alert was created successfully.
 
 ## Persistence Checkpoint
 
@@ -67,6 +75,7 @@ The following state is saved outside the browser and survives normal logout and 
 - Saved Shuffle workflow, authenticated webhook, and hotloaded Shuffle Tools application
 - Persistent Shuffle TLS mounts and protected Wazuh-side webhook trust files
 - Installed Wazuh custom forwarder and validated integration configuration
+- Persistent private Shuffle-to-IRIS relay with protected API-key storage and certificate verification
 - Host settings required by OpenSearch
 
 The checkpoint and exact resume point are also committed in the private implementation repository. Secrets, private addresses, certificates, raw alerts, and webhook values are intentionally excluded from both repositories.
@@ -101,6 +110,7 @@ The checkpoint and exact resume point are also committed in the private implemen
 - The protected Shuffle intake workflow accepts authenticated test events and processes the complete event object successfully.
 - The active Wazuh integration can deliver a bounded synthetic level-12 event through the protected Shuffle webhook with verified TLS.
 - The complete manager-to-Shuffle path was validated through log collection, rule analysis, the integration daemon, sanitization, authenticated delivery, and successful workflow execution.
+- The complete manager-to-Shuffle-to-IRIS alert path was validated without exposing the IRIS API key to the workflow or creating cases automatically.
 - A sanitized Git checkpoint prevents completed infrastructure and workflow setup from being repeated.
 
 ## Lessons Learned
@@ -112,11 +122,11 @@ The checkpoint and exact resume point are also committed in the private implemen
 
 ## Next Phase
 
-1. Map approved fields into DFIR-IRIS and add duplicate-case prevention.
-2. Confirm repeated alerts update or reference the existing case instead of creating duplicates.
+1. Add duplicate suppression using the sanitized alert reference.
+2. Add analyst approval before promoting an IRIS alert to a case.
 3. Add approval gates before introducing any response action.
-4. Record sanitized Wazuh-to-Shuffle-to-IRIS validation evidence.
+4. Continue recording only sanitized validation evidence.
 
 ## Last Updated
 
-2026-08-23
+2026-09-06
